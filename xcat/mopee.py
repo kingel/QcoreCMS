@@ -210,6 +210,8 @@ class PostgresqlAsyncDatabase(PostgresqlDatabase):
                 #pass
         #else:
             #cursor = yield momoko.Op(self.get_conn().execute, sql, params)
+        if type(sql) == tuple:
+            sql = sql[0]
         cursor = yield momoko.Op(self.get_conn().execute, sql, params)
 
         if callback and cursor:

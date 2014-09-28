@@ -194,17 +194,17 @@ class TableField(AsyncModel):
     filters = mopee.CharField(default='', help_text="编辑数据时，对数据进行过滤的函数")
     validators = mopee.CharField(default='', help_text="编辑数据时，对数据进行验证的函数")
     tip = mopee.CharField(max_length=255, default='', help_text="编辑时的提示信息")
-    null = mopee.IntegerField(max_length=2, default=1, help_text="1: 容许空 0: 否")
-    index = mopee.IntegerField(max_length=2, default=0)
-    unique = mopee.IntegerField(max_length=2, default=0)
+    null = mopee.IntegerField(default=1, help_text="1: 容许空 0: 否")
+    index = mopee.IntegerField(default=0)
+    unique = mopee.IntegerField(default=0)
     default = mopee.CharField(max_length=255, default=None, null=True)
-    max_length = mopee.IntegerField(max_length=2, default=None, null=True)
+    max_length = mopee.IntegerField(default=None, null=True)
     order = mopee.IntegerField(default=0, index=1)
-    
+
     # 支持的过滤
     filter_func = ['int', 'str', 'float', 'trim', 'md5', 'sha1']
     # 支持的验证规则
-    validator_rules = ['Email', 'IPAddress', 'Length', 
+    validator_rules = ['Email', 'IPAddress', 'Length',
         'NumberRange', 'Required', 'Regexp', 'URL',
         'AnyOf', 'NoneOf']
 
