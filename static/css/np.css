@@ -1,0 +1,129 @@
+body {
+    background: url(../images/background.png) !important;
+}
+.page-planner {
+    background: transparent !important;
+}
+
+.note {
+    text-shadow: none;
+    font-size: 10px;
+    width: 50px;
+    height: 40px;
+    overflow: hidden;
+    padding: 2px 4px;
+    text-decoration: none;
+    color: #000 !important;
+    position: absolute;
+    font-family: 'Marker Felt', Helvetica;
+    z-index: 2;
+}
+.note-development {
+    border: 1px solid #F7C942;
+    background: #fadb4e;
+    background-image: -moz-linear-gradient(top, #fceda7, #fadb4e);
+    background-image: -webkit-gradient(linear,left top,left bottom, color-stop(0, #fceda7), color-stop(1, #fadb4e));
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#fceda7', EndColorStr='#fadb4e')";
+}
+.note-projectmanagement {
+    border: 1px solid #F78942;
+    background: #fa9b4e;
+    background-image: -moz-linear-gradient(top, #fcada7, #fa9b4e);
+    background-image: -webkit-gradient(linear,left top,left bottom, color-stop(0, #fcada7), color-stop(1, #fa9b4e));
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#fcada7', EndColorStr='#fa9b4e')";
+}
+.note-meeting {
+    border: 1px solid #42F799;
+    background: #4efaab;
+    background-image: -moz-linear-gradient(top, #a7fcbd, #4efaab);
+    background-image: -webkit-gradient(linear,left top,left bottom, color-stop(0, #a7fcbd), color-stop(1, #4efaab));
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#a7fcbd', EndColorStr='#4efaab')";
+}
+.note-other {
+    border: 1px solid #42C9F7;
+    background: #4edbfa;
+    background-image: -moz-linear-gradient(top, #a7edfc, #4edbfa);
+    background-image: -webkit-gradient(linear,left top,left bottom, color-stop(0, #a7edfc), color-stop(1, #4edbfa));
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#a7edfc', EndColorStr='#4edbfa')";
+}
+
+.visualPadding {
+    padding: 4px;
+}
+#canvasArea {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 1;
+}
+
+.ui-header .ui-select {
+    display: inline-block;
+}
+
+.pane {
+    width: 1024px;
+    height: 576px;
+    position: absolute;
+    background-color: #fff;
+    display: none;
+}
+
+.page-planner .ui-content {
+    padding: 0 !important;
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: visible;
+}
+.pane table.top-table {
+    width: 1024px;
+}
+.pane table.top-table th {
+    height: 40px;
+}
+.pane table.top-table td {
+    padding: 0 8px;
+}
+.pane table.bottom-table td {
+    padding: 8px 0 0 8px;
+    vertical-align: top;
+}
+.pane table.bottom-table {
+    width: 1024px;
+}
+.settings-panel {
+    padding: 0 30px;
+    display: none;
+}
+.selected-panel {
+    display: block;
+}
+.content-primary {
+    width: 70%;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+.content-secondary {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 30%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    border-right: solid 1px #ccc;
+}
+#page-settings .ui-content {
+    padding: 0;
+    position: absolute;
+    top: 42px;
+    bottom: 47px;
+    width: 100%;
+}
+#page-settings .ui-content .ui-listview {
+    margin: 0;
+}

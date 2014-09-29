@@ -21,13 +21,8 @@ class Index(RequestHandler):
     @asynchronous
     @gen.engine
     def get(self):
-        #if not (yield gen.Task(self.application.cache.get, 'has_key2')):
-            #print 'write'
-            #yield gen.Task(self.application.cache.set, 'has_key2', 'test', -1)
-        #else:
-            #print 'read'
-        self.write('hello word')
-        self.finish()
+        self.render('admin/np.html')
+        # self.finish()
 
 
 @route(r"/install")

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Notes Planner</title>
+
+    <meta name="viewport" content="maximum-scale=1.0, user-scalable=0, width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" type="text/css" href="dependencies/jquery.mobile.css">
+    <link rel="stylesheet" type="text/css" href="css/np.css">
+
+    <link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico" />
+
+    <script src="dependencies/jquery.js"></script>
+    <script src="dependencies/jquery.ui.core.js"></script>
+    <script src="dependencies/jquery.ui.widget.js"></script>
+    <script src="dependencies/jquery.ui.mouse.js"></script>
+    <script src="dependencies/jquery.ui.draggable.js"></script>
+    <script src="dependencies/jquery.ui.touch.js"></script>
+    <script src="dependencies/jquery.mobile.js"></script>
+    <script src="dependencies/jquery.cookie.js"></script>
+    <script src="dependencies/sockjs-0.3.min.js"></script>
+    <script src="js/np.core.js"></script>
+  </head>
+  <body>
+    <div data-role="page" class="page-planner">
+      <div data-role="header">
+        <div class="ui-btn-left">
+          <a href="#page-addnote" data-rel="dialog" data-transition="flip" data-icon="add" data-role="button">New note</a>
+          <select data-native-menu="false" id="paint-tool" name="paint-tool">
+            <option value="#000000">Black</option>
+            <option value="#ff0000">Red</option>
+            <option value="#00ff00">Green</option>
+            <option value="#0000ff">Blue</option>
+            <option value="#eeee00">Yellow</option>
+            <option value="erase">Erase</option>
+            <option value="clear">Clear all</option>
+          </select>
+          <a href="#page-settings" data-transition="flip" data-role="button" data-icon="gear">Properties</a>
+        </div>
+        <h1></h1>
+        <div class="ui-btn-right">
+          <a href="#page-addplanner" data-role="button" data-icon="add">New planner</a>
+          <a href="#page-deleteplanner" data-role="button" data-icon="delete">Delete planner</a>
+          <a href="#page-prevplanner" data-role="button" data-icon="arrow-l">Previous</a>
+          <a href="#page-nextplanner" data-role="button" data-icon="arrow-r">Next</a>
+        </div>
+      </div>
+      <div data-role="content">
+        <div class="pane">
+          <table border="0" cellspacing="0" cellpadding="0" class="top-table"></table>
+          <table border="0" cellspacing="0" cellpadding="0" class="bottom-table"></table>
+          <canvas id="canvasArea" width="1024" height="576"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div data-role="page" id="page-editnote">
+      <div data-role="header" data-position="fixed" data-theme="b">
+        <h1>Edit note</h1>
+        <a href="#" class="delete" data-icon="delete" data-rel="back" data-transition="pop">Delete note</a>
+      </div>
+      <div data-role="content">
+        <div data-role="fieldcontain">
+          <label for="notedescription">Note:</label>
+          <textarea cols="40" rows="8" name="notedescription" id="notedescription"></textarea>
+        </div>
+
+        <div data-role="fieldcontain">
+          <fieldset data-role="controlgroup">
+            <legend>Type:</legend>
+            <input type="radio" name="notetype" id="notetype-development" value="development" checked="checked" />
+            <label for="notetype-development">Development</label>
+
+            <input type="radio" name="notetype" id="notetype-projectmanagement" value="projectmanagement"  />
+            <label for="notetype-projectmanagement">Projectmanagement</label>
+
+            <input type="radio" name="notetype" id="notetype-meeting" value="meeting"  />
+            <label for="notetype-meeting">Meeting</label>
+
+            <input type="radio" name="notetype" id="notetype-other" value="other"  />
+            <label for="notetype-other">Other</label>
+          </fieldset>
+        </div>
+
+        <div>
+          <a href="#" class="save" data-inline="true" data-role="button" data-rel="back" data-transition="flip" data-theme="b">Save</a>
+          <a href="#" class="cancel" data-inline="true" data-role="button" data-rel="back" data-transition="flip">Cancel</a>
+        </div>
+      </div>
+    </div>
+
+    <div data-role="page" id="page-addnote">
+      <div data-role="header" data-position="fixed" data-theme="b">
+        <h1>New note</h1>
+      </div>
+      <div data-role="content">
+        <div data-role="fieldcontain">
+          <label for="notedescription">Note:</label>
+          <textarea name="notedescription" id="notedescription"></textarea>
+        </div>
+
+        <div data-role="fieldcontain">
+          <fieldset data-role="controlgroup">
+            <legend>Type:</legend>
+
+            <input type="radio" name="notetype" id="notetype-development" value="development" checked="checked" />
+            <label for="notetype-development">Development</label>
+
+            <input type="radio" name="notetype" id="notetype-projectmanagement" value="projectmanagement"  />
+            <label for="notetype-projectmanagement">Projectmanagement</label>
+
+            <input type="radio" name="notetype" id="notetype-meeting" value="meeting"  />
+            <label for="notetype-meeting">Meeting</label>
+
+            <input type="radio" name="notetype" id="notetype-other" value="other"  />
+            <label for="notetype-other">Other</label>
+
+          </fieldset>
+        </div>
+
+        <div>
+          <a href="#" class="save" data-inline="true" data-role="button" data-rel="back" data-transition="flip" data-theme="b">Save</a>
+          <a href="#" class="cancel" data-inline="true" data-role="button" data-rel="back" data-transition="flip">Cancel</a>
+        </div>
+      </div>
+    </div>
+
+    <div data-role="page" id="page-settings">
+      <div data-role="header" data-position="fixed">
+        <h1>Settings</h1>
+      </div>
+      <div data-role="content">
+        <div class="content-secondary">
+          <ul data-role="listview" data-theme="c">
+            <li data-role="heading">Settings</li>
+            <li data-theme="b"><a href="#settings-basic">Basic</a></li>
+            <li><a href="#settings-columns">Columns</a></li>
+            <li><a href="#settings-rows">Rows</a></li>
+            <li><a href="#settings-status">Status</a></li>
+            <li><a href="#settings-notes">Notes</a></li>
+            <!--li><a href="#settings-sharing">Sharing</a></li-->
+          </ul>
+        </div>
+
+        <div class="content-primary">
+          <div id="settings-basic" class="settings-panel">
+            <h2>Basic settings</h2>
+
+            <div data-role="fieldcontain">
+              <label for="title">Title:</label>
+              <input type="text" name="title" id="title" value=""  />
+            </div>
+
+            <div data-role="fieldcontain">
+              <label for="description">Description:</label>
+              <textarea name="description" id="description"></textarea>
+            </div>
+          </div>
+
+          <div id="settings-columns" class="settings-panel">
+            <h2>Column settings</h2>
+
+            <div data-role="fieldcontain">
+              <label for="columnlabels">Column labels:</label>
+              <textarea name="columnlabels" id="columnlabels"></textarea>
+            </div>
+
+            <div data-role="fieldcontain">
+              <label for="columnparts">Column parts:</label>
+              <input type="range" name="columnparts" id="columnparts" value="2" min="1" max="4" step="1" />
+            </div>
+          </div>
+
+          <div id="settings-rows" class="settings-panel">
+            <h2>Row settings</h2>
+
+            <div data-role="fieldcontain">
+              <label for="rowlabels">Row labels:</label>
+              <textarea name="rowlabels" id="rowlabels"></textarea>
+            </div>
+          </div>
+
+          <div id="settings-status" class="settings-panel">
+            <h2>Status settings</h2>
+
+            <div data-role="fieldcontain">
+              <label for="statuslabels">Status labels:</label>
+              <textarea name="statuslabels" id="statuslabels"></textarea>
+            </div>
+
+            <div data-role="fieldcontain">
+              <label for="statusheight">Status height (percentage):</label>
+              <input type="range" name="statusheight" id="statusheight" value="30" min="0" max="50" step="5" />
+            </div>
+          </div>
+
+          <div id="settings-notes" class="settings-panel">
+            <h2>Notes settings</h2>
+
+            <div data-role="fieldcontain">
+              <label for="notecategories">Note categories:</label>
+              <textarea name="notecategories" id="notecategories"></textarea>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div data-role="footer" data-position="fixed">
+        <div class="ui-bar">
+          <a href="#" class="save" data-inline="true" data-role="button" data-rel="back" data-transition="flip" data-theme="b">Save</a>
+          <a href="#" class="cancel" data-inline="true" data-role="button" data-rel="back" data-transition="flip">Cancel</a>
+        </div>
+      </div>
+    </div>
+
+  </body>
+</html>

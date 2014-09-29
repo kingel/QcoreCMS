@@ -455,8 +455,9 @@ def sync_app(method):
 
 class Application(Application):
 
-    def __init__(self, default_host="", transforms=None,
+    def __init__(self, handlers=None, default_host="", transforms=None,
                  wsgi=False, **settings):
+
 
         if settings.get('template_path'):
             # 配置 jinja2
@@ -477,7 +478,7 @@ class Application(Application):
                 'sync_key', 'xcat.web.Application.id')
 
         ret = super(Application, self).__init__(
-            [],
+            handlers,
             default_host,
             transforms,
             wsgi,
@@ -519,7 +520,7 @@ class Application(Application):
                    and o.__name__.find('.handlers.') != -1:
                     reload(o)
 
-        # print route._routes
+        print route._routes
 
         route.acl(self)
         route.routes(self)
