@@ -4,3 +4,4 @@ momoko
 Jinja2
 wtforms
 arrow
+sockjs-tornado

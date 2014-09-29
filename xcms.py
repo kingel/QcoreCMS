@@ -11,6 +11,7 @@ sys.setdefaultencoding('utf8')
 
 import os
 from tornado.options import define, options, parse_command_line
+from sockjs.tornado import SockJSRouter, SockJSConnection
 
 # 定义参数
 define('port', default=80, type=int)
@@ -46,9 +47,17 @@ config.get('database').connect()
 from app import uimodules
 config.set('ui_modules', uimodules)
 
+class EchoConnection(SockJSConnection):
+    def on_message(self, msg):
+        self.send(msg)
+
+
 if __name__ == '__main__':
+    EchoRouter = SockJSRouter(EchoConnection, '/echo')
+
     from app.handlers import *
     application = Application(**config.get())
+    application.add_handlers(".*$", EchoRouter.urls)
     http_server = HTTPServer(application)
     http_server.listen(options.port)
     IOLoop.instance().start()
